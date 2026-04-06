@@ -225,10 +225,63 @@
   .proj-group-label.a { color: var(--teal-dark); }
   .proj-group-label.b { color: var(--coral-dark); }
 
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
+  /* SELECTS */
+  select.db-select {
+    font-size: 10px; padding: 2px 6px; border-radius: 4px;
+    font-weight: 600; cursor: not-allowed; pointer-events: none;
+    border: 1px solid #CBD5E1;
+  }
+  .edit-mode select.db-select { cursor: pointer; pointer-events: all; }
+  select.db-select.s-green  { background:#E1F5EE; color:#085041; border-color:#1D9E75; }
+  select.db-select.s-amber  { background:#FAEEDA; color:#633806; border-color:#E8993A; }
+  select.db-select.s-red    { background:#FCEBEB; color:#791F1F; border-color:#E24B4A; }
+  select.db-select.s-blue   { background:#E6F1FB; color:#0C447C; border-color:#CBD5E1; }
+  select.db-select.s-gray   { background:#F1EFE8; color:#5F5E5A; border-color:#CBD5E1; }
+
+  /* RESPONSIVE MOBILE */
+  @media (max-width: 768px) {
+    .header { flex-wrap: wrap; padding: 10px 14px; gap: 8px; }
+    .header-left { width: 100%; }
+    .header-right { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+    .legend { display: none; }
+    .header-title h1 { font-size: 13px; }
+    .logo-img { height: 32px; }
+    .main { padding: 10px 12px; gap: 10px; }
     .portfolio-grid { grid-template-columns: 1fr; }
     .middle-grid { grid-template-columns: 1fr; }
+    .kpi-card { flex-direction: row; flex-wrap: wrap; justify-content: space-around; padding: 10px; }
+    .kpi-value { font-size: 22px; }
+    table { font-size: 10px; }
+    th, td { padding: 4px 5px; }
+    .risks-table th, .risks-table td { font-size: 9px; padding: 4px 4px; }
+    /* Ocultar columnas menos críticas en móvil */
+    .risks-table th:nth-child(6),
+    .risks-table td:nth-child(6),
+    .risks-table th:nth-child(7),
+    .risks-table td:nth-child(7),
+    .risks-table th:nth-child(8),
+    .risks-table td:nth-child(8) { display: none; }
+    .alert-row { grid-template-columns: 90px 1fr; gap: 6px; }
+    .alert-row span:nth-child(3),
+    .alert-row span:nth-child(4) { display: none; }
+    .alert-header { display: none; }
+    .chart-container { height: 80px; }
+    select.db-select { font-size: 9px; padding: 2px 4px; }
+    .ms-row { grid-template-columns: 10px 1fr 55px 70px; gap: 5px; }
+    .tag { font-size: 9px; padding: 1px 5px; }
+    .card { padding: 10px; }
+    .proj-card { padding: 10px; }
+    .section-label { font-size: 9px; }
+    .edit-btn, .save-btn { font-size: 11px; padding: 5px 10px; }
+    .chat-panel { width: calc(100vw - 32px) !important; right: 16px !important; bottom: 80px !important; max-height: 60vh !important; }
+    .chat-fab { bottom: 16px !important; right: 16px !important; width: 48px !important; height: 48px !important; }
+  }
+  @media (max-width: 480px) {
+    .risks-table th:nth-child(4),
+    .risks-table td:nth-child(4),
+    .risks-table th:nth-child(5),
+    .risks-table td:nth-child(5) { display: none; }
+    .header-meta { display: none; }
   }
 </style>
 </head>
@@ -270,6 +323,7 @@
       </div>
       <div class="fecha">Portafolio activo · 2 proyectos</div>
     </div>
+    <button onclick="toggleChat()" style="background:#1D9E75;color:white;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;margin-right:6px;">🤖 Asistente IA</button>
     <button class="edit-btn" id="edit-btn" onclick="toggleEdit()">✏️ Editar</button>
     <button class="save-btn" id="save-btn" onclick="toggleEdit()">✔ Guardar</button>
   </div>
@@ -401,87 +455,22 @@
       <div class="section-label">Milestones</div>
       <div class="proj-group-label a">A — Snacks Premium</div>
       <div class="ms-row"><span class="ms-dot ms-dot-green"></span><span>M0 Arranque</span><span style="color:var(--text-secondary);font-size:10px">04 may</span><span class="tag tag-green">Completado</span></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M2 Costeo aprobado</span><span style="color:var(--text-secondary);font-size:10px">19 may</span><select id="ms-a2" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M1 Cumplimiento regulatorio</span><span style="color:var(--text-secondary);font-size:10px">16 jul</span><select id="ms-a1" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M3 Presentación formal</span><span style="color:var(--text-secondary);font-size:10px">18 jul</span><select id="ms-a3" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M4 Volumen confirmado</span><span style="color:var(--text-secondary);font-size:10px">24 jul</span><select id="ms-a4" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M5 Primer embarque</span><span style="color:var(--text-secondary);font-size:10px">28 jul</span><select id="ms-a5" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M6 Entrega CEDIS</span><span style="color:var(--text-secondary);font-size:10px">16 sep</span><select id="ms-a6" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M7 Producto en PDV</span><span style="color:var(--text-secondary);font-size:10px">23 sep</span><select id="ms-a7" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M2 Costeo aprobado</span><span style="color:var(--text-secondary);font-size:10px">19 may</span><select id="ms-a2" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M1 Cumplimiento regulatorio</span><span style="color:var(--text-secondary);font-size:10px">16 jul</span><select id="ms-a1" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M3 Presentación formal</span><span style="color:var(--text-secondary);font-size:10px">18 jul</span><select id="ms-a3" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M4 Volumen confirmado</span><span style="color:var(--text-secondary);font-size:10px">24 jul</span><select id="ms-a4" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M5 Primer embarque</span><span style="color:var(--text-secondary);font-size:10px">28 jul</span><select id="ms-a5" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M6 Entrega CEDIS</span><span style="color:var(--text-secondary);font-size:10px">16 sep</span><select id="ms-a6" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M7 Producto en PDV</span><span style="color:var(--text-secondary);font-size:10px">23 sep</span><select id="ms-a7" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
 
       <div class="proj-group-label b" style="margin-top:10px">B — Lácteo Local</div>
       <div class="ms-row"><span class="ms-dot ms-dot-green"></span><span>M0 Arranque</span><span style="color:var(--text-secondary);font-size:10px">04 may</span><span class="tag tag-green">Completado</span></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M1 Contrato firmado</span><span style="color:var(--text-secondary);font-size:10px">22 may</span><select id="ms-b1" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M2 Aprobación EE.UU.</span><span style="color:var(--text-secondary);font-size:10px">17 jul</span><select id="ms-b2" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M3 Piloto validado EE.UU.</span><span style="color:var(--text-secondary);font-size:10px">17 sep</span><select id="ms-b3" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M4 Clientes notificados</span><span style="color:var(--text-secondary);font-size:10px">24 sep</span><select id="ms-b4" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M5 Producción liberada</span><span style="color:var(--text-secondary);font-size:10px">dic 2026</span><select id="ms-b5" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
-      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M6 Primera entrega CEDIS</span><span style="color:var(--text-secondary);font-size:10px">ene 2027</span><select id="ms-b6" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="Pendiente">Pendiente</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M1 Contrato firmado</span><span style="color:var(--text-secondary);font-size:10px">22 may</span><select id="ms-b1" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M2 Aprobación EE.UU.</span><span style="color:var(--text-secondary);font-size:10px">17 jul</span><select id="ms-b2" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M3 Piloto validado EE.UU.</span><span style="color:var(--text-secondary);font-size:10px">17 sep</span><select id="ms-b3" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M4 Clientes notificados</span><span style="color:var(--text-secondary);font-size:10px">24 sep</span><select id="ms-b4" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M5 Producción liberada</span><span style="color:var(--text-secondary);font-size:10px">dic 2026</span><select id="ms-b5" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
+      <div class="ms-row"><span class="ms-dot ms-dot-gray"></span><span>M6 Primera entrega CEDIS</span><span style="color:var(--text-secondary);font-size:10px">ene 2027</span><select id="ms-b6" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="Pendiente">Pendiente</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></div>
     </div>
 
     <!-- ACTIVIDADES RC -->
@@ -494,34 +483,19 @@
           <td>Consulta agente aduanal</td>
           <td style="color:var(--text-secondary)">8–9 may</td>
           <td style="color:var(--text-secondary)">Importaciones</td>
-          <td><select id="rc-a1" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-a1" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
         <tr>
           <td>Arrancar permiso COFEPRIS</td>
           <td style="color:var(--text-secondary)">13 may</td>
           <td style="color:var(--text-secondary)">Importaciones</td>
-          <td><select id="rc-a2" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-a2" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
         <tr>
           <td>Validar cantidad mínima importación</td>
           <td style="color:var(--text-secondary)">8–14 may</td>
           <td style="color:var(--text-secondary)">Import. / Finanzas</td>
-          <td><select id="rc-a3" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-a3" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
       </table>
 
@@ -532,45 +506,25 @@
           <td>Confidencialidad maquilador</td>
           <td style="color:var(--text-secondary)">4–6 may</td>
           <td style="color:var(--text-secondary)">Dir. General / PMO</td>
-          <td><select id="rc-b1" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-b1" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
         <tr>
           <td>Auditoría maquilador</td>
           <td style="color:var(--text-secondary)">7–13 may</td>
           <td style="color:var(--text-secondary)">Calidad / Logística</td>
-          <td><select id="rc-b2" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-b2" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
         <tr>
           <td>Specs técnicas fabricante EE.UU.</td>
           <td style="color:var(--text-secondary)">7–13 may</td>
           <td style="color:var(--text-secondary)">Calidad / Import.</td>
-          <td><select id="rc-b3" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-b3" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
         <tr>
           <td>Cerrar contrato maquilador</td>
           <td style="color:var(--text-secondary)">14–22 may</td>
           <td style="color:var(--text-secondary)">Dir. General / PMO</td>
-          <td><select id="rc-b4" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E1F5EE;color:#085041;font-weight:600;cursor:pointer;">
-  <option value="En tiempo">En tiempo</option>
-  <option value="Completado">Completado</option>
-  <option value="En riesgo">En riesgo</option>
-  <option value="Retrasado">Retrasado</option>
-</select></td>
+          <td><select id="rc-b4" class="db-select s-green" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="En tiempo">En tiempo</option><option value="Completado">Completado</option><option value="En riesgo">En riesgo</option><option value="Retrasado">Retrasado</option></select></td>
         </tr>
       </table>
     </div>
@@ -579,6 +533,7 @@
   <!-- RIESGOS -->
   <div class="card">
     <div class="section-label">Registro de riesgos activos</div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
     <table class="risks-table">
       <tr>
         <th>Proy.</th>
@@ -594,13 +549,9 @@
       <tr>
         <td><span class="proj-badge-a"></span>A</td>
         <td>Retraso permiso COFEPRIS — hasta 30 días hábiles fuera de control de Eatics</td>
-        <td><span class="tag tag-red">Alto</span></td>
+        <td><select id="r1-crit" class="db-select" onchange="updateCrit('r1-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">Importaciones</td>
-        <td><select id="r1-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r1-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">Presentar expediente completo desde día 1 sin observaciones</td>
         <td style="color:var(--text-secondary)">—</td>
         <td style="color:var(--text-secondary)">04 may</td>
@@ -609,13 +560,9 @@
       <tr>
         <td><span class="proj-badge-a"></span>A</td>
         <td>Calendarios cerrados de catalogación en retailers — pérdida de ventana navideña</td>
-        <td><span class="tag tag-red">Alto</span></td>
+        <td><select id="r2-crit" class="db-select" onchange="updateCrit('r2-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">Dir. General</td>
-        <td><select id="r2-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r2-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">Presentación exploratoria con muestras temporales S3-S4</td>
         <td style="color:var(--text-secondary)">—</td>
         <td style="color:var(--text-secondary)">04 may</td>
@@ -624,13 +571,9 @@
       <tr>
         <td><span class="proj-badge-a"></span>A</td>
         <td>Cadena de frío nunca operada para esta categoría — riesgo de pérdida de producto</td>
-        <td><span class="tag tag-amber">Medio</span></td>
+        <td><select id="r3-crit" class="db-select" onchange="updateCrit('r3-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">Logística</td>
-        <td><select id="r3-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r3-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">Validar y adecuar cadena de frío antes de primer embarque</td>
         <td style="color:var(--text-secondary)">—</td>
         <td style="color:var(--text-secondary)">04 may</td>
@@ -639,13 +582,9 @@
       <tr>
         <td><span class="proj-badge-b"></span>B</td>
         <td>Maquilador no supera auditoría o no acepta condiciones de calidad e inocuidad</td>
-        <td><span class="tag tag-red">Alto</span></td>
+        <td><select id="r4-crit" class="db-select" onchange="updateCrit('r4-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">Calidad / PMO</td>
-        <td><select id="r4-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r4-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">Checklist completo NOM-121/251/120 en auditoría S1-S2</td>
         <td style="color:var(--text-secondary)">Identificar maquilador alternativo desde S1 en paralelo</td>
         <td style="color:var(--text-secondary)">04 may</td>
@@ -654,13 +593,9 @@
       <tr>
         <td><span class="proj-badge-b"></span>B</td>
         <td>Aprobación fabricante EE.UU. retrasada — cuello de botella no controlable por Eatics</td>
-        <td><span class="tag tag-red">Alto</span></td>
+        <td><select id="r5-crit" class="db-select" onchange="updateCrit('r5-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">Dir. General / Calidad</td>
-        <td><select id="r5-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r5-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">Enviar paquete completo fórmula+proceso en una sola solicitud</td>
         <td style="color:var(--text-secondary)">Escalar a CEO con opciones concretas al día 60</td>
         <td style="color:var(--text-secondary)">04 may</td>
@@ -669,13 +604,9 @@
       <tr>
         <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--purple);margin-right:4px;"></span>AB</td>
         <td>Conflicto de recursos — Calidad activa en ambos proyectos todo el año sin capacidad adicional</td>
-        <td><span class="tag tag-red">Alto</span></td>
+        <td><select id="r6-crit" class="db-select" onchange="updateCrit('r6-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">PMO</td>
-        <td><select id="r6-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r6-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">PMO gestiona priorización dinámica semanal</td>
         <td style="color:var(--text-secondary)">Escalar a CEO si no es resoluble por PMO</td>
         <td style="color:var(--text-secondary)">04 may</td>
@@ -684,19 +615,16 @@
       <tr>
         <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--purple);margin-right:4px;"></span>AB</td>
         <td>Resistencia pasiva al cambio — primera vez que Eatics opera con figura de PMO</td>
-        <td><span class="tag tag-amber">Medio</span></td>
+        <td><select id="r7-crit" class="db-select" onchange="updateCrit('r7-crit')" style="pointer-events:none;cursor:not-allowed;"><option value="Alto">Alto</option><option value="Medio">Medio</option><option value="Bajo">Bajo</option></select></td>
         <td style="color:var(--text-secondary)">PMO</td>
-        <td><select id="r7-est" onchange="updateAll()" style="font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid #CBD5E1;background:#E6F1FB;color:#0C447C;font-weight:600;cursor:pointer;">
-  <option value="No materializado">No materializado</option>
-  <option value="Materializado">Materializado</option>
-  <option value="Cerrado">Cerrado</option>
-</select></td>
+        <td><select id="r7-est" class="db-select s-blue" onchange="updateAll()" style="pointer-events:none;cursor:not-allowed;"><option value="No materializado">No materializado</option><option value="Materializado">Materializado</option><option value="Cerrado">Cerrado</option></select></td>
         <td style="color:var(--text-secondary)">Kick off portafolio con todos los involucrados en S1</td>
         <td style="color:var(--text-secondary)">Escalar a CEO si resistencia bloquea actividades de RC</td>
         <td style="color:var(--text-secondary)">04 may</td>
         <td style="color:var(--text-secondary)">11 may</td>
       </tr>
     </table>
+    </div>
   </div>
 
   <!-- ALERTAS -->
@@ -829,6 +757,16 @@ function updateCharts(chartObj, weekIdx, realPct) {
   chartObj.update();
 }
 
+function updateCrit(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const val = el.value;
+  el.className = 'db-select ' + (val === 'Alto' ? 's-red' : val === 'Medio' ? 's-amber' : 's-green');
+}
+function updateCrits() {
+  ['r1-crit','r2-crit','r3-crit','r4-crit','r5-crit','r6-crit','r7-crit'].forEach(id => updateCrit(id));
+}
+
 // FUNCIÓN PRINCIPAL DE ACTUALIZACIÓN
 function updateAll() {
   // Calcular avance por milestones
@@ -871,6 +809,7 @@ function updateAll() {
   updateMsDots();
   updateRcColors();
   updateRiskColors();
+  updateCrits();
 
   // Actualizar curva S con avance real de la semana actual
   const semana = parseInt(document.getElementById('semana-actual')?.value || 0);
@@ -878,6 +817,13 @@ function updateAll() {
   if (semana > 0 && window.chartB) updateCharts(window.chartB, semana - 1, bReal);
 }
 
+// Inicializar criticidades
+const initCrits = {'r1-crit':'Alto','r2-crit':'Alto','r3-crit':'Medio',
+  'r4-crit':'Alto','r5-crit':'Alto','r6-crit':'Alto','r7-crit':'Medio'};
+Object.entries(initCrits).forEach(([id, val]) => {
+  const el = document.getElementById(id);
+  if (el) { el.value = val; updateCrit(id); }
+});
 updateAll();
 
 // ─── CURVA S ───
@@ -922,14 +868,20 @@ function toggleEdit() {
   document.getElementById('edit-btn').style.display = editMode ? 'none' : 'block';
   document.getElementById('save-btn').style.display = editMode ? 'block' : 'none';
   document.getElementById('edit-hint').style.display = editMode ? 'block' : 'none';
-  // Solo los campos de texto necesitan contenteditable
-  document.querySelectorAll('.editable:not(select)').forEach(el => {
+  // Activar/desactivar selects
+  document.querySelectorAll('select.db-select').forEach(el => {
+    el.style.pointerEvents = editMode ? 'all' : 'none';
+    el.style.cursor = editMode ? 'pointer' : 'not-allowed';
+  });
+  // Activar/desactivar campos de texto
+  document.querySelectorAll('.editable').forEach(el => {
     el.setAttribute('contenteditable', editMode ? 'true' : 'false');
     if (!editMode) el.blur();
   });
+  // Activar modo edición en el body para CSS
+  document.body.classList.toggle('edit-mode', editMode);
   if (!editMode) {
     updateAll();
-    // Mostrar confirmación
     const btn = document.getElementById('save-btn');
     btn.textContent = '✔ Guardado';
     btn.style.background = 'var(--teal)';
@@ -957,12 +909,15 @@ document.querySelectorAll('.editable').forEach(el => {
     background: var(--navy); border: 3px solid var(--teal);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     font-size: 22px; box-shadow: 0 4px 16px rgba(30,39,97,0.35);
-    z-index: 1000; transition: transform 0.2s;
+    z-index: 9999; transition: transform 0.2s;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
   .chat-fab:hover { transform: scale(1.08); }
   .chat-panel {
     position: fixed; bottom: 96px; right: 28px;
     width: 380px; max-height: 520px;
+    z-index: 9998;
     background: white; border: 1px solid var(--border);
     border-radius: 14px; box-shadow: 0 8px 32px rgba(30,39,97,0.18);
     display: none; flex-direction: column; z-index: 999;
@@ -981,6 +936,7 @@ document.querySelectorAll('.editable').forEach(el => {
     flex: 1; overflow-y: auto; padding: 12px;
     display: flex; flex-direction: column; gap: 8px;
     background: #F8F7F4;
+    -webkit-overflow-scrolling: touch;
   }
   .msg { max-width: 88%; padding: 8px 12px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
   .msg-bot { background: white; border: 1px solid var(--border); color: var(--text); align-self: flex-start; border-radius: 4px 10px 10px 10px; }
@@ -1027,13 +983,18 @@ document.querySelectorAll('.editable').forEach(el => {
   .sq-btn:hover { background: var(--blue-light); border-color: var(--blue); }
 </style>
 
-<!-- FAB BUTTON -->
-<div class="chat-fab" onclick="toggleChat()" title="Asistente PMO con IA">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.48 2 12C2 13.85 2.5 15.58 3.37 17.07L2.07 21.93L6.93 20.63C8.42 21.5 10.15 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="#1D9E75"/>
-    <text x="12" y="16" text-anchor="middle" fill="white" font-size="10" font-weight="bold" font-family="sans-serif">IA</text>
-  </svg>
-</div>
+<!-- FAB BUTTON - Fixed para iOS -->
+<button onclick="toggleChat()" title="Asistente PMO con IA" style="
+  position:fixed; bottom:24px; right:24px;
+  width:54px; height:54px; border-radius:50%;
+  background:#1E2761; border:3px solid #1D9E75;
+  color:white; font-size:13px; font-weight:700;
+  cursor:pointer; z-index:99999;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3);
+  display:flex; align-items:center; justify-content:center;
+  -webkit-appearance:none; appearance:none;
+  touch-action:manipulation;
+">🤖</button>
 
 <!-- CHAT PANEL -->
 <div class="chat-panel" id="chat-panel">
