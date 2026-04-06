@@ -942,6 +942,12 @@ async function sendMessage() {
         messages: chatHistory
       })
     });
+    if (!response.ok) {
+      const errText = await response.text();
+      loadingDiv.textContent = 'Error ' + response.status + ': ' + errText.substring(0, 150);
+      sendBtn.disabled = false;
+      return;
+    }
     const data = await response.json();
     if (data.content && data.content[0]) {
       const reply = data.content[0].text;
@@ -952,7 +958,7 @@ async function sendMessage() {
       loadingDiv.textContent = 'Error al conectar con el asistente. Verifica tu API key.';
     }
   } catch (err) {
-    loadingDiv.textContent = 'Error de conexión. Verifica que tienes internet y que la API key es válida.';
+    loadingDiv.textContent = 'Error: ' + (err.message || 'desconocido');
   }
   sendBtn.disabled = false;
   document.getElementById('chat-messages').scrollTop = 9999;
